@@ -1,5 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
+#include "Asteroid.hpp"
+#include <random>
+
+std::random_device rd;
+std::mt19937 gen(rd());
+
 
 int main()
 {
@@ -8,7 +14,16 @@ int main()
         "Asteroids"
     );
 
+    std::uniform_real_distribution<float> xPos(0.f, 800.f);
+
+    std::uniform_real_distribution<float> velocity(0.f, 0.3f);
+
     Player player;
+    Asteroid asteroid(
+    {velocity(gen), velocity(gen)},
+    {xPos(gen), 0}
+    );
+
 
     while (window.isOpen())
     {
@@ -21,8 +36,10 @@ int main()
         window.clear();
 
         player.update();
+        asteroid.update();
 
         player.draw(window);
+        asteroid.draw(window);
 
         window.display();
     }

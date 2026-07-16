@@ -61,10 +61,11 @@ compile_commands.json
 *.exe
 # vcpkg
 vcpkg_installed/
-
+.vscode/
 # debug information files
 *.dwo
 
 # test output & cache
 Testing/
 .cache/
+

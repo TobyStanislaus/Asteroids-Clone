@@ -20,6 +20,8 @@ int main()
 
         window.clear();
 
+        player.update();
+
         player.draw(window);
 
         window.display();

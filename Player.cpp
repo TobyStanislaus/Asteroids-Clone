@@ -4,6 +4,7 @@
 
 Player::Player()
 {
+
     shape.setPointCount(3);
 
     shape.setPoint(0, {0, -20});
@@ -45,6 +46,17 @@ void Player::update()
 }
 
 
+sf::Vector2f Player::getPosition() const
+{
+    return shape.getPosition();
+}
+
+float Player::getRadius() const
+{
+    return radius;
+}
+
+
 void Player::wrap()
 {
     sf::Vector2f position = shape.getPosition();
@@ -52,7 +64,7 @@ void Player::wrap()
     float width = 800;
     float height = 600;
 
-    float margin = 20;
+    float margin = 40;
 
     if (position.x < -margin)
     {

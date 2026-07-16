@@ -9,10 +9,13 @@ private:
 
     sf::Vector2f velocity;
     float rotation = 0;
+    float radius = 23.f;
     void wrap();
 public:
     Player();
 
     void update();
     void draw(sf::RenderWindow& window);
+    sf::Vector2f getPosition() const;
+    float getRadius() const;
 };

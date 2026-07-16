@@ -14,10 +14,7 @@ public:
     void draw(sf::RenderWindow& window);
     bool check_pos();
     
+    void wrap();
     sf::Vector2f getPosition() const;
-    void setPosition(sf::Vector2f position);
-
-    sf::Vector2f getVelocity() const;
-    void setVelocity(sf::Vector2f velocity);
-
+    float getRadius() const;
 };

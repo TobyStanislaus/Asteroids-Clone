@@ -14,10 +14,14 @@ Bullet::Bullet(sf::Vector2f position, float direction)
     shape.setRotation(sf::radians(dir));
 }
 
-void Bullet::update()
+void Bullet::update(float dt)
 {
-    sf::Vector2f velo = {velocity*std::cos(direction), velocity*std::sin(direction)};
+    sf::Vector2f velo = {
+        velocity*std::cos(direction), 
+        velocity*std::sin(direction)};
+
     shape.move(velo);
+    lifetime -= dt;
 }
 
 void Bullet::draw(sf::RenderWindow& window)
@@ -28,4 +32,10 @@ void Bullet::draw(sf::RenderWindow& window)
 sf::Vector2f Bullet::getPosition() const
 {
     return shape.getPosition();
+}
+
+
+bool Bullet::isAlive() const
+{
+    return lifetime > 0.f;
 }

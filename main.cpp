@@ -26,7 +26,8 @@ int main()
     sf::Clock asteroidClock;
     std::vector<Asteroid> asteroids;
     std::vector<Bullet> bullets;
-    
+    sf::Clock clock;
+
     sf::RenderWindow window(
         sf::VideoMode({800, 600}),
         "Asteroids"
@@ -59,6 +60,7 @@ int main()
         }
 
         
+        
         window.clear();
         player.update();
 
@@ -69,11 +71,23 @@ int main()
 
         }
 
+        float dt = clock.restart().asSeconds();
         for (auto& bullet : bullets)
         {
-            bullet.update();
+            bullet.update(dt);
             bullet.draw(window);
         }
+
+        bullets.erase(
+            std::remove_if(
+                bullets.begin(),
+                bullets.end(),
+                [](Bullet& bullet)
+                {
+                    return !bullet.isAlive();
+                }),
+            bullets.end()
+        );
 
         for (auto& asteroid : asteroids)
         {

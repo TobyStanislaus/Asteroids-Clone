@@ -18,4 +18,7 @@ public:
     void draw(sf::RenderWindow& window);
     sf::Vector2f getPosition() const;
     float getRadius() const;
+    sf::Vector2f getVelocity() const;
+    float getDirection() const;
+
 };

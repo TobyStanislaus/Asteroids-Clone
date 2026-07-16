@@ -56,6 +56,15 @@ float Player::getRadius() const
     return radius;
 }
 
+sf::Vector2f Player::getVelocity() const
+{
+    return velocity;
+}
+
+float Player::getDirection() const
+{
+    return shape.getRotation().asRadians() - (std::numbers::pi / 2);
+}
 
 void Player::wrap()
 {

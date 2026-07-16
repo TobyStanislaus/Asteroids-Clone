@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
 #include "Asteroid.hpp"
+#include "Bullet.hpp"
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -23,21 +25,20 @@ int main()
 {
     sf::Clock asteroidClock;
     std::vector<Asteroid> asteroids;
-
+    std::vector<Bullet> bullets;
+    
     sf::RenderWindow window(
         sf::VideoMode({800, 600}),
         "Asteroids"
     );
 
     std::uniform_real_distribution<float> xPos(0.f, 800.f);
-    std::uniform_real_distribution<float> velocity(-0.1f, 0.1f);
+    std::uniform_real_distribution<float> velocity(0.f, 0.1f);
 
     Player player;
-    Asteroid asteroid(
-    {velocity(gen), velocity(gen)},
-    {xPos(gen), -40.f}
-    );
+    Asteroid asteroid({velocity(gen), velocity(gen)},{xPos(gen), -40.f});
     bool go=true;
+
     asteroids.emplace_back(asteroid);
 
     while (window.isOpen()&&go)
@@ -57,9 +58,22 @@ int main()
             asteroidClock.restart();
         }
 
-
+        
         window.clear();
         player.update();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
+
+            Bullet bullet(player.getPosition(), player.getDirection());
+            bullets.emplace_back(bullet);
+
+        }
+
+        for (auto& bullet : bullets)
+        {
+            bullet.update();
+            bullet.draw(window);
+        }
 
         for (auto& asteroid : asteroids)
         {

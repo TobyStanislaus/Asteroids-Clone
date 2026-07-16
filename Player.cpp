@@ -24,8 +24,9 @@ void Player::update()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
     {  
         float angle = shape.getRotation().asRadians() + (std::numbers::pi / 2);
-        velocity.x -= 0.0001f * std::cos(angle);
-        velocity.y -= 0.0001f * std::sin(angle);
+        if (std::abs(velocity.x-0.0001f*std::cos(angle)) < 0.5f){velocity.x -= 0.0001f * std::cos(angle);}
+        if (std::abs(velocity.y-0.0001f*std::sin(angle)) < 0.5f){velocity.y -= 0.0001f * std::sin(angle);}
+        
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
@@ -38,7 +39,7 @@ void Player::update()
         shape.rotate(sf::degrees(0.2));
     }
 
-
+    velocity *= 0.9999f;
     shape.move(velocity);
     wrap();
 }

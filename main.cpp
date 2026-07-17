@@ -10,13 +10,14 @@ std::random_device rd;
 std::mt19937 gen(rd());
 
 
-bool checkCollision(Player& ship, Asteroid& asteroid)
+template<typename T1, typename T2>
+bool checkCollision(const T1& a, const T2& b)
 {
-    sf::Vector2f diff = ship.getPosition() - asteroid.getPosition();
+    sf::Vector2f diff = a.getPosition() - b.getPosition();
 
     float distanceSquared = diff.x * diff.x + diff.y * diff.y;
 
-    float radiusSum = ship.getRadius() + asteroid.getRadius();
+    float radiusSum = a.getRadius() + b.getRadius();
 
     return distanceSquared < radiusSum * radiusSum;
 }
@@ -63,7 +64,10 @@ int main()
         
         window.clear();
         player.update();
+        player.draw(window);
 
+
+        // ALL of the bullet stuff
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
 
             Bullet bullet(player.getPosition(), player.getDirection());
@@ -76,6 +80,18 @@ int main()
         {
             bullet.update(dt);
             bullet.draw(window);
+
+            asteroids.erase(
+                std::remove_if(
+                    asteroids.begin(),
+                    asteroids.end(),
+                    [bullet](Asteroid& asteroid)
+                    {
+                        return checkCollision(bullet, asteroid);
+                    }),
+
+                    asteroids.end()
+            );
         }
 
         bullets.erase(
@@ -88,15 +104,17 @@ int main()
                 }),
             bullets.end()
         );
+        //
+
+
 
         for (auto& asteroid : asteroids)
         {
             asteroid.update();
             if (checkCollision(player, asteroid)){go=false;}
+
             asteroid.draw(window);
         }
-
-        player.draw(window);
 
         window.display();
     }

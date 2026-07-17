@@ -39,3 +39,8 @@ bool Bullet::isAlive() const
 {
     return lifetime > 0.f;
 }
+
+float Bullet::getRadius() const
+{
+    return radius;
+}

@@ -9,6 +9,7 @@ private:
     float velocity=0.2f;
     float direction;
     float lifetime = 0.5f;
+    float radius = 20.f;
 
 public:
     Bullet(sf::Vector2f position, float rotation);
@@ -18,4 +19,5 @@ public:
 
     sf::Vector2f getPosition() const;
     bool isAlive() const;
+    float getRadius() const;
 };

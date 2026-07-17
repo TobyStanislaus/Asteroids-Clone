@@ -3,7 +3,7 @@
 
 Asteroid::Asteroid(sf::Vector2f velocity, sf::Vector2f position) : velocity(velocity)
 {
-    shape.setRadius(20.f);
+    shape.setRadius(30.f);
     shape.setOrigin({40.f, 40.f});
 
     shape.setPosition(position);

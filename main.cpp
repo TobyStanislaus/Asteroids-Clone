@@ -25,6 +25,8 @@ bool checkCollision(const T1& a, const T2& b)
 int main()
 {
     sf::Clock asteroidClock;
+    sf::Clock bulletClock;
+
     std::vector<Asteroid> asteroids;
     std::vector<Bullet> bullets;
     sf::Clock clock;
@@ -35,7 +37,7 @@ int main()
     );
 
     std::uniform_real_distribution<float> xPos(0.f, 800.f);
-    std::uniform_real_distribution<float> velocity(0.f, 0.1f);
+    std::uniform_real_distribution<float> velocity(-0.1f, 0.1f);
 
     Player player;
     Asteroid asteroid({velocity(gen), velocity(gen)},{xPos(gen), -40.f});
@@ -51,8 +53,8 @@ int main()
                 window.close();
         }
 
-        if (asteroidClock.getElapsedTime().asSeconds() >= 5.f)
-        {
+        if (asteroidClock.getElapsedTime().asSeconds() >= 0.75f)
+        {  
             asteroids.emplace_back(
                 sf::Vector2f(velocity(gen), velocity(gen)),  
                 sf::Vector2f(xPos(gen), -40.f)  
@@ -60,7 +62,11 @@ int main()
             asteroidClock.restart();
         }
 
-        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) && bulletClock.getElapsedTime().asSeconds() >=0.5f){
+            Bullet bullet(player.getPosition(), player.getDirection());
+            bullets.emplace_back(bullet);
+            bulletClock.restart();
+        }
         
         window.clear();
         player.update();
@@ -68,12 +74,7 @@ int main()
 
 
         // ALL of the bullet stuff
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
 
-            Bullet bullet(player.getPosition(), player.getDirection());
-            bullets.emplace_back(bullet);
-
-        }
 
         float dt = clock.restart().asSeconds();
         for (auto& bullet : bullets)

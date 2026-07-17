@@ -8,7 +8,7 @@ private:
     sf::RectangleShape shape;
     float velocity=0.2f;
     float direction;
-    float lifetime = 0.5f;
+    float lifetime = 3.f;
     float radius = 20.f;
 
 public:

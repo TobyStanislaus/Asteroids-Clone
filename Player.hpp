@@ -9,7 +9,7 @@ private:
 
     sf::Vector2f velocity;
     float rotation = 0;
-    float radius = 23.f;
+    float radius = 15.f;
     void wrap();
 public:
     Player();

@@ -41,11 +41,11 @@ int main()
 
     Player player;
     Asteroid asteroid({velocity(gen), velocity(gen)},{xPos(gen), -40.f});
-    bool go=true;
+    bool running=true;
 
     asteroids.emplace_back(asteroid);
 
-    while (window.isOpen()&&go)
+    while (window.isOpen()&&running)
     {
         while (auto event = window.pollEvent())
         {
@@ -112,7 +112,7 @@ int main()
         for (auto& asteroid : asteroids)
         {
             asteroid.update();
-            if (checkCollision(player, asteroid)){go=false;}
+            if (checkCollision(player, asteroid)){running=false;}
 
             asteroid.draw(window);
         }
